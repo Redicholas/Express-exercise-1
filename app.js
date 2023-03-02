@@ -6,6 +6,8 @@ const loginNameInput = document.querySelector("#loginNameInput");
 const loginPasswordInput = document.querySelector("#loginPasswordInput");
 const loginBtn = document.querySelector("#loginBtn");
 
+const forms = document.querySelector("#forms");
+
 const userList = document.querySelector("#userList");
 
 fetch("http://localhost:3000/users")
@@ -37,7 +39,7 @@ loginBtn.addEventListener("click", () => {
     .then((res) => res.json())
     .then((data) => {
       if (data.status === 200) {
-        alert("Login Successful");
+        forms.innerHTML = `<h1>Welcome ${user.name}</h1>`;
       } else {
         alert("Login Failed");
       }
