@@ -1,22 +1,16 @@
-const userNameInput = document.querySelector("#userNameInput");
-const userPasswordInput = document.querySelector("#userPasswordInput");
-const addUserBtn = document.querySelector("#submitUserBtn");
+function init() {
+  document.querySelector("#submitUserBtn").addEventListener("click", addUser);
+  document.querySelector("#loginBtn").addEventListener("click", checkLogin);
 
-const loginNameInput = document.querySelector("#loginNameInput");
-const loginPasswordInput = document.querySelector("#loginPasswordInput");
-const loginBtn = document.querySelector("#loginBtn");
-
-const forms = document.querySelector("#forms");
-
-const userList = document.querySelector("#userList");
-
-fetch("http://localhost:3000/users")
-  .then((response) => response.json())
-  .then((data) => {
-    renderUsers(data);
-  });
+  fetch("http://localhost:3000/users")
+    .then((response) => response.json())
+    .then((data) => {
+      renderUsers(data);
+    });
+}
 
 function renderUsers(users) {
+  const userList = document.querySelector("#userList");
   userList.innerHTML = "";
 
   users.map((user) => {
@@ -26,7 +20,11 @@ function renderUsers(users) {
   });
 }
 
-loginBtn.addEventListener("click", () => {
+function checkLogin() {
+  const forms = document.querySelector("#forms");
+  const loginNameInput = document.querySelector("#loginNameInput");
+  const loginPasswordInput = document.querySelector("#loginPasswordInput");
+
   let user = { name: loginNameInput.value, password: loginPasswordInput.value };
 
   fetch("http://localhost:3000/users/login", {
@@ -44,9 +42,12 @@ loginBtn.addEventListener("click", () => {
         alert("Login Failed");
       }
     });
-});
+}
 
-addUserBtn.addEventListener("click", () => {
+function addUser() {
+  const userNameInput = document.querySelector("#userNameInput");
+  const userPasswordInput = document.querySelector("#userPasswordInput");
+
   let user = { name: userNameInput.value, password: userPasswordInput.value };
   console.log(user);
   userNameInput.value = "";
@@ -67,4 +68,6 @@ addUserBtn.addEventListener("click", () => {
           renderUsers(data);
         });
     });
-});
+}
+
+init();
