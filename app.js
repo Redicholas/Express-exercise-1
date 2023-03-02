@@ -24,6 +24,26 @@ function renderUsers(users) {
   });
 }
 
+loginBtn.addEventListener("click", () => {
+  let user = { name: loginNameInput.value, password: loginPasswordInput.value };
+
+  fetch("http://localhost:3000/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        alert("Login Successful");
+      } else {
+        alert("Login Failed");
+      }
+    });
+});
+
 addUserBtn.addEventListener("click", () => {
   let user = { name: userNameInput.value, password: userPasswordInput.value };
   console.log(user);
